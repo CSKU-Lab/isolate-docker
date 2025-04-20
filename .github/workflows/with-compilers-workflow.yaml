@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "with-compilers/Dockerfile"
+  workflow_dispatch:
+
 env:
   IMAGE_NAME: isolate-with-compilers
 

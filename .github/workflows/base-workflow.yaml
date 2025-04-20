@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - "base/Dockerfile"
+  workflow_dispatch:
+
 jobs:
   build-base-isolate:
     runs-on: ubuntu-latest
