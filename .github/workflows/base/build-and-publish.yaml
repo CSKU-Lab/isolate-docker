@@ -1,10 +1,13 @@
 name: Build and Publish Docker image
-on: [push]
+on:
+  push:
+    paths:
+      - "base/Dockerfile"
 jobs:
-  docker:
+  build-base-isolate:
     runs-on: ubuntu-latest
     steps:
-      - name: Docker meta
+      - name: get Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -40,10 +43,5 @@ jobs:
           tags: |
             ${{ steps.meta.outputs.tags}}
             ${{ vars.DOCKER_USERNAME }}/isolate:latest
-      - name: Trigger with Compiler image to build
-        uses: ./.github/actions/dispatch-action
-        with:
-         token: ${{ secrets.ORG_PAT }}
-         repo: CSKU-Lab/isolate-docker
-         event_type: build-trigger
-         client_payload: '{"ref": "${{ github.ref }}"}'
+      - name: Rebuild with compilers image
+        uses: ./.github/workflows/with-compilers/build-and-publish.yaml
