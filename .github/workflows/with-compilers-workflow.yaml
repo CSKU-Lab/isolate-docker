@@ -5,6 +5,7 @@ on:
     paths:
       - "with-compilers/Dockerfile"
   workflow_dispatch:
+  workflow_call:
 
 env:
   IMAGE_NAME: isolate-with-compilers
