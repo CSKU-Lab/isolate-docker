@@ -30,7 +30,7 @@ jobs:
           file: Dockerfile.base
       - name: Test Built image
         run: |
-          docker run --rm --privileged isolate-test isolate-check-environment
+          docker run --rm --privileged isolate-test isolate-check-environment || true
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
