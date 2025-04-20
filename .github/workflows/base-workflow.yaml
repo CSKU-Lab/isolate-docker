@@ -44,4 +44,4 @@ jobs:
             ${{ steps.meta.outputs.tags}}
             ${{ vars.DOCKER_USERNAME }}/isolate:latest
   rebuild-with-compilers:
-    uses: CSKU-Lab/isolate-docker/.github/workflows/with-compilers/build-and-publish.yaml@main
+    uses: CSKU-Lab/isolate-docker/.github/workflows/with-compilers-workflow.yaml@main
