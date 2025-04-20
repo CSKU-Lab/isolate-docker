@@ -1,0 +1,49 @@
+name: Build and Publish Docker image
+on: [push]
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ${{ vars.DOCKER_USERNAME }}/isolate
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=sha
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v6
+        with:
+          load: true
+          tags: isolate-test
+          platforms: linux/amd64
+          file: Dockerfile.base
+      - name: Test Built image
+        run: |
+          docker run --rm --privileged isolate-test isolate-check-environment || true
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm64
+          file: Dockerfile.base
+          tags: |
+            ${{ steps.meta.outputs.tags}}
+            ${{ vars.DOCKER_USERNAME }}/isolate:latest
+      - name: Trigger with Compiler image to build
+        uses: ./.github/actions/dispatch-action
+        with:
+         token: ${{ secrets.ORG_PAT }}
+         repo: CSKU-Lab/isolate-docker
+         event_type: build-trigger
+         client_payload: '{"ref": "${{ github.ref }}"}'

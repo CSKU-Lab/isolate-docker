@@ -47,4 +47,6 @@ COPY ./container-extra-config.sh /usr/local/bin/container-extra-config.sh
 
 RUN chmod +x /usr/local/bin/container-extra-config.sh
 
+COPY ./config /usr/local/etc/isolate
+
 ENTRYPOINT ["container-extra-config.sh"]

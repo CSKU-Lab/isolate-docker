@@ -1,5 +1,12 @@
-name: Build and Publish Docker image
-on: [push]
+name: With Compilers Workflow
+
+on:
+  repository_dispatch:
+    types: [build-trigger]
+
+env:
+  IMAGE_NAME: isolate-with-compilers
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -10,7 +17,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{ vars.DOCKER_USERNAME }}/isolate
+            ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=sha
@@ -25,18 +32,18 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           load: true
-          tags: isolate-test
+          tags: isolate-with-compilers-test
           platforms: linux/amd64
-          file: Dockerfile.base
+          file: Dockerfile.with-compilers
       - name: Test Built image
         run: |
-          docker run --rm --privileged isolate-test isolate-check-environment || true
+          docker run --rm --privileged isolate-with-compilers-test isolate-check-environment || true
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          file: Dockerfile.base
+          file: Dockerfile.with-compilers
           tags: |
             ${{ steps.meta.outputs.tags}}
-            ${{ vars.DOCKER_USERNAME }}/isolate:latest
+            ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
