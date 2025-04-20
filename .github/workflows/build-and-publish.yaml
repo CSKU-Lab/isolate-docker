@@ -26,6 +26,8 @@ jobs:
         with:
           load: true
           tags: isolate-test
+          platforms: linux/amd64
+          file: Dockerfile.base
       - name: Test Built image
         run: |
           docker run --rm --privileged isolate-test isolate-check-environment
