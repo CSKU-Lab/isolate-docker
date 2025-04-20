@@ -47,4 +47,5 @@ jobs:
             ${{ vars.DOCKER_USERNAME }}/isolate:latest
   rebuild-with-compilers:
     needs: build-base-isolate
+    secrets: inherit
     uses: CSKU-Lab/isolate-docker/.github/workflows/with-compilers-workflow.yaml@main
