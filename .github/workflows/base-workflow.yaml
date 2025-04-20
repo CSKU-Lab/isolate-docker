@@ -30,7 +30,7 @@ jobs:
           load: true
           tags: isolate-test
           platforms: linux/amd64
-          file: Dockerfile.base
+          file: base/Dockerfile
       - name: Test Built image
         run: |
           docker run --rm --privileged isolate-test isolate-check-environment || true
@@ -39,9 +39,9 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          file: Dockerfile.base
+          file: base/Dockerfile
           tags: |
             ${{ steps.meta.outputs.tags}}
             ${{ vars.DOCKER_USERNAME }}/isolate:latest
-      - name: Rebuild with compilers image
-        uses: ./.github/workflows/with-compilers/build-and-publish.yaml
+  rebuild-with-compilers:
+    uses: CSKU-Lab/isolate-docker/.github/workflows/with-compilers/build-and-publish.yaml@main
