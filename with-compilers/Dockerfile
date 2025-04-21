@@ -21,4 +21,4 @@ RUN apt install -y golang-go
 # NodeJS Lang
 RUN apt install -y nodejs
 
-ENTRYPOINT ["/bin/bash", "-c", "tail > /dev/null"]
+ENTRYPOINT ["/bin/bash", "-c", "tail -f > /dev/null"]
