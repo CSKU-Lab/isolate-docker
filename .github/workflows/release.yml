@@ -1,0 +1,19 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  release:
+    uses: CSKU-Lab/.github/.github/workflows/release.yml@main
+    with:
+      docker_workflow: with-compilers-workflow.yaml
+    secrets: inherit
