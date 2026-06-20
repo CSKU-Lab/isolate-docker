@@ -21,4 +21,7 @@ RUN apt install -y golang-go
 # NodeJS Lang
 RUN apt install -y nodejs
 
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 CMD ["/bin/bash", "-c", "tail -f > /dev/null"]
