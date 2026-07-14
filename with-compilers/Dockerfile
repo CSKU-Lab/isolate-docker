@@ -46,7 +46,9 @@ RUN GO_VERSION="$(curl -sSL https://go.dev/VERSION?m=text | head -n1)" \
 	&& curl -sSL "https://go.dev/dl/${GO_VERSION}.linux-${TARGETARCH}.tar.gz" -o /tmp/go.tar.gz \
 	&& rm -rf /usr/local/go \
 	&& tar -C /usr/local -xzf /tmp/go.tar.gz \
-	&& rm /tmp/go.tar.gz
+	&& rm /tmp/go.tar.gz \
+	&& ln -sf /usr/local/go/bin/go /usr/local/bin/go \
+	&& ln -sf /usr/local/go/bin/gofmt /usr/local/bin/gofmt
 ENV PATH="/usr/local/go/bin:${PATH}"
 # Writable, world-accessible GOCACHE so the sandbox user can build.
 ENV GOCACHE=/tmp/go-cache GOPATH=/tmp/go
@@ -57,7 +59,8 @@ ENV GOCACHE=/tmp/go-cache GOPATH=/tmp/go
 ENV RUSTUP_HOME=/opt/rust CARGO_HOME=/opt/rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
 	| sh -s -- -y --no-modify-path --profile minimal \
-	&& chmod -R a+rX /opt/rust
+	&& chmod -R a+rX /opt/rust \
+	&& for b in /opt/rust/bin/*; do ln -sf "$b" /usr/local/bin/; done
 ENV PATH="/opt/rust/bin:${PATH}"
 
 CMD ["/bin/bash", "-c", "tail -f > /dev/null"]
