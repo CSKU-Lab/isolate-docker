@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/CSKU-Lab/isolate-docker/compare/v1.1.0...v1.1.1) (2026-07-14)
+
+
+### Bug Fixes
+
+* expose go/rust on sandbox PATH; document language setup ([2adcd96](https://github.com/CSKU-Lab/isolate-docker/commit/2adcd96ed92e50af7febc494792f3db7d166497c))
+
 # [1.1.0](https://github.com/CSKU-Lab/isolate-docker/compare/v1.0.0...v1.1.0) (2026-07-14)
 
 
