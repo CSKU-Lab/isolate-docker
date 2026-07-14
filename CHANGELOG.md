@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/CSKU-Lab/isolate-docker/compare/v1.0.0...v1.1.0) (2026-07-14)
+
+
+### Features
+
+* support java, go, rust, python 3.14, c/c++17 in with-compilers ([127d0cb](https://github.com/CSKU-Lab/isolate-docker/commit/127d0cbe07167ffa6df4ea05d34cd4db7ebf11e4))
+
 # 1.0.0 (2026-07-14)
 
 
